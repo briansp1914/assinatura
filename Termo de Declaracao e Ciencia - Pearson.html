@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termo de Declaração e Ciência</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1px;
+    }
+
+    img {
+      max-width: 18%;
+      height: auto;
+    }
+
+    .form-group {
+      margin: 5px 0;
+    }
+
+    .input-row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      width: 100%;
+    }
+
+    #signature-pad {
+      border: 2px solid #3498db;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 500px;
+      height: 100px;
+      position: relative;
+      overflow: hidden;
+      touch-action: none;
+      /* Impede comportamento padrão do toque */
+    }
+
+    canvas {
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .declaracao {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-left: 5px solid #3498db;
+      border-radius: 5px;
+      margin-top: 10px;
+      margin-bottom: 0px;
+      margin-left: 40px;
+      margin-right: 40px;
+      text-align: justify;
+      font-size: 18px;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    .observacao {
+      margin-top: 2px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      color: #e74c3c;
+      text-align: center;
+    }
+
+    #gerar-pdf {
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    #gerar-pdf:hover {
+      background-color: #005599;
+    }
+
+    #clear-signature {
+      background-color: #c0392b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      margin-right: 10px;
+    }
+
+    #clear-signature:hover {
+      background-color: #e74c3c;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 500px;
+      margin-top: 10px;
+    }
+
+    .input-nome,
+    .input-re,
+    .input-viagem,
+    .input-valor {
+      padding: 10px;
+      border: 2px solid #3498db;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s;
+    }
+
+    .input-nome {
+      width: 300px;
+    }
+
+    .input-re {
+      width: 140px;
+    }
+
+    .input-viagem {
+      width: 140px;
+    }
+
+    .input-valor {
+      width: 145px;
+    }
+
+    input:focus {
+      border-color: #2980b9;
+      outline: none;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv0z8mvjB1Jqvnw5CwyCS5j6gFNn9dVP1jpA&s"
+    alt="Imagem Centralizada">
+
+  <h2 style="text-align: center; color: #3498db; margin-bottom: 5px; margin-top: 5px;">
+    DECLARAÇÃO DE CONCORDÂNCIA E CIÊNCIA – Política de Cartão de Crédito Corporativo
+  </h2>
+  <div class="declaracao">
+    Declaro que estou e de acordo com a POLÍTICA DE CARTÃO DE CRÉDITO CORPORATIVO do Grupo Eurofarma, e que:
+    <br><br>
+    <strong>1. Uso Permitido e Restrições Gerais:</strong> O cartão corporativo ou a antecipação de valores deve ser
+    utilizado exclusivamente para despesas permitidas pela empresa e em horário de trabalho.
+    <br><br>
+    O cartão não permite:
+    <ul>
+      <li>Parcelamento de despesas ou pagamentos;</li>
+      <li>Compras internacionais;</li>
+      <li>Compras online.</li>
+    </ul>
+    <strong>2. Responsabilidade Pessoal:</strong> O uso do cartão é estritamente pessoal e intransferível, sendo vedado
+    seu empréstimo a outros colaboradores, parentes ou terceiros não autorizados.
+    <br><br>
+    Em caso de furto, roubo, perda ou extravio do cartão, o portador deverá entrar em contato imediatamente com a
+    central de atendimento da administradora do cartão para solicitar o cancelamento e contestação de compras indevidas
+    caso haja.
+    <br><br>
+    Em caso de desligamento, as transações que permanecerem pendentes de prestação de contas serão descontadas no
+    processo de rescisão.
+    <br><br>
+    <strong>3. Consequências pelo Uso Indevido:</strong> Despesas pessoais realizadas com o cartão serão descontadas
+    diretamente na minha folha de pagamento.
+  </div>
+
+  <div class="observacao">
+    <strong>Observação:</strong> Após preencher todas as informações, clique em "Salvar como PDF" e anexe o documento ao
+    chamado.
+  </div>
+
+  <div class="form-group input-row">
+    <div>
+      <label for="nome">Nome Completo portador do cartão:</label>
+      <input type="text" id="nome" class="input-nome"
+        oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúãõâêîôûàèìòùçÇ\s\.,;:!?()-]/g, '')" required>
+    </div>
+    <div>
+      <label for="re">RE portador do cartão:</label>
+      <input type="text" id="re" class="input-re" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Assinatura portador do cartão:</label>
+    <div id="signature-pad">
+      <canvas id="meuCanvas" width="500" height="100"></canvas>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button id="clear-signature">Limpar</button>
+    <button id="gerar-pdf">Salvar como PDF</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const canvas = document.getElementById('meuCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let hasDrawn = false;
+
+    function getPosicao(event) {
+      const rect = canvas.getBoundingClientRect();
+      let clientX, clientY;
+      if (event.touches) {
+        clientX = event.touches[0].clientX;
+        clientY = event.touches[0].clientY;
+      } else {
+        clientX = event.clientX;
+        clientY = event.clientY;
+      }
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function comecarDesenho(event) {
+      event.preventDefault(); // Evita scroll em dispositivos móveis
+      isDrawing = true;
+      hasDrawn = true;
+      const pos = getPosicao(event);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }
+
+    function desenhar(event) {
+      event.preventDefault();
+      if (!isDrawing) return;
+      const pos = getPosicao(event);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+
+    function pararDesenho(event) {
+      event && event.preventDefault();
+      isDrawing = false;
+      ctx.beginPath();
+    }
+
+    // Eventos de mouse
+    canvas.addEventListener('mousedown', comecarDesenho);
+    canvas.addEventListener('mousemove', desenhar);
+    canvas.addEventListener('mouseup', pararDesenho);
+    canvas.addEventListener('mouseout', pararDesenho);
+
+    // Eventos de toque (touch)
+    canvas.addEventListener('touchstart', comecarDesenho);
+    canvas.addEventListener('touchmove', desenhar);
+    canvas.addEventListener('touchend', pararDesenho);
+    canvas.addEventListener('touchcancel', pararDesenho);
+
+    document.getElementById('clear-signature').onclick = function () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hasDrawn = false;
+    };
+
+    document.getElementById('gerar-pdf').onclick = function () {
+      const nome = document.getElementById('nome').value;
+      const re = document.getElementById('re').value;
+
+      if (!nome || !re) {
+        alert('Por favor, preencha todos os campos antes de gerar o PDF.');
+        return;
+      }
+
+      if (!hasDrawn) {
+        alert('Por favor, adicione sua assinatura antes de gerar o PDF.');
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const img = new Image();
+      img.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv0z8mvjB1Jqvnw5CwyCS5j6gFNn9dVP1jpA&s';
+      img.onload = function () {
+        doc.addImage(img, 'PNG', 150, 5, 50, 0);
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Termo de declaração de concordância e ciência', 35, 45);
+        doc.text('(Política de Cartão de Crédito Corporativo)', 43, 52);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(13);
+        doc.text(
+          `Eu, ${nome}, RE ${re}, declaro que estou de acordo com a POLÍTICA DE CARTÃO DE CRÉDITO CORPORATIVO do Grupo Eurofarma, bem como as regras de Uso Permitido e Restrições Gerais, Responsabilidade Pessoal, Consequências pelo Uso Indevido. Estou ciente de que o descumprimento dessas regras poderá acarretar sanções administrativas e financeiras.`,
+          10,
+          70,
+          { maxWidth: 190 }
+        );
+        doc.text(
+          `        1. Uso Permitido e Restrições Gerais: O cartão corporativo ou a antecipação de valores deve ser utilizado exclusivamente para despesas permitidas pela empresa e em horário de trabalho.`,
+          10,
+          105,
+          { maxWidth: 190 }
+        );
+        doc.text(
+          `        2. Responsabilidade Pessoal: O uso do cartão é estritamente pessoal e intransferível, sendo vedado seu empréstimo a outros colaboradores, parentes ou terceiros não autorizados.`,
+          10,
+          125,
+          { maxWidth: 190 }
+        );
+        doc.text(
+          `Em caso de furto, roubo, perda ou extravio do cartão, o portador deverá entrar em contato imediatamente com a central de atendimento da administradora do cartão para solicitar o cancelamento e contestação de compras indevidas caso haja.`,
+          10,
+          145,
+          { maxWidth: 190 }
+        );
+        doc.text(
+          `Em caso de desligamento, as transações que permanecerem pendentes de prestação de contas serão descontadas no processo de rescisão.`,
+          10,
+          165,
+          { maxWidth: 190 }
+        );
+        doc.text(
+          `        3. Consequências pelo Uso Indevido: Despesas pessoais realizadas com o cartão serão descontadas diretamente na minha folha de pagamento.`,
+          10,
+          180,
+          { maxWidth: 190 }
+        );
+
+        const dataAtual = new Date();
+        const opcoes = { year: 'numeric', month: 'long', day: 'numeric', locale: 'pt-BR' };
+        const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoes);
+        doc.text(`São Paulo, ${dataFormatada}`, 15, 241);
+        doc.text('______________________________________', 15, 235);
+
+        const signatureDataUrl = canvas.toDataURL();
+        doc.addImage(signatureDataUrl, 'PNG', 15, 210, 95, 25);
+        doc.save(`Termo de declaração de concordância e ciência - ${nome}.pdf`);
+      };
+    };
+  </script>
+
+</body>
+
+</html>
