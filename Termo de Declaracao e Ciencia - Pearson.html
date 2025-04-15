@@ -182,8 +182,7 @@
     Em caso de desligamento, as transações que permanecerem pendentes de prestação de contas serão descontadas no
     processo de rescisão.
     <br><br>
-    <strong>3. Consequências pelo Uso Indevido:</strong> Despesas pessoais realizadas com o cartão serão descontadas
-    diretamente na minha folha de pagamento.
+    <strong>3. Consequências pelo Uso Indevido:</strong> Despesas pessoais realizadas com o cartão corporativo deverão ser reembolsadas a empresa via transferência em conta corrente, e realizar os procedimentos posteriores de prestação de contas e envio do comprovante de pagamento ao CSC para baixa.
   </div>
 
   <div class="observacao">
@@ -337,25 +336,29 @@
           { maxWidth: 190 }
         );
         doc.text(
-          `        3. Consequências pelo Uso Indevido: Despesas pessoais realizadas com o cartão serão descontadas diretamente na minha folha de pagamento.`,
+          `        3. Consequências pelo Uso Indevido: Despesas pessoais realizadas com o cartão corporativo deverão ser reembolsadas a empresa via transferência em conta corrente, e realizar os procedimentos posteriores de prestação de contas e envio do comprovante de pagamento ao CSC para baixa.`,
           10,
           180,
+          { maxWidth: 190 }
+        );
+        doc.text(
+          `Em caso de extravio de notas fiscais de compras realizadas no cartão, estou ciente que deverei reembolsar a empresa ou realizar a criação do memorando com as devidas aprovações dos meus gestores, e realizar os procedimentos posteriores de prestação de contas e envio do comprovante de pagamento (se aplicável) ao CSC para baixa.`,
+          10,
+          205,
           { maxWidth: 190 }
         );
 
         const dataAtual = new Date();
         const opcoes = { year: 'numeric', month: 'long', day: 'numeric', locale: 'pt-BR' };
         const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoes);
-        doc.text(`São Paulo, ${dataFormatada}`, 15, 241);
-        doc.text('______________________________________', 15, 235);
+        doc.text(`São Paulo, ${dataFormatada}`, 15, 261);
+        doc.text('______________________________________', 15, 255);
 
         const signatureDataUrl = canvas.toDataURL();
-        doc.addImage(signatureDataUrl, 'PNG', 15, 210, 95, 25);
+        doc.addImage(signatureDataUrl, 'PNG', 15, 230, 95, 25);
         doc.save(`Termo de declaração de concordância e ciência - ${nome}.pdf`);
       };
     };
   </script>
-
 </body>
-
 </html>
